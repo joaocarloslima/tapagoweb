@@ -2,8 +2,8 @@
 
 import { redirect } from "next/navigation"
 
-export async function create(formData: FormData){
-    await new Promise(r => setTimeout(r, 3000))
+export async function create(prevState: any, formData: FormData){
+    await new Promise(r => setTimeout(r, 1000))
     
     const data = {
       nome: formData.get("nome"),
@@ -19,6 +19,15 @@ export async function create(formData: FormData){
     }
 
     const resp = await fetch(`${process.env.API_BASE_URL}/categoria`, options)
+    
+    if (resp.ok){
+      redirect("/categorias")
+    }
 
-    if (resp.status == 201) redirect("/categorias")
+    if (resp.status == 400){
+      return {
+        messageNome: "Validação falhou"
+      }
+    }
+    
   }
