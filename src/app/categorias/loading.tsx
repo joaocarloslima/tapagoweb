@@ -12,7 +12,7 @@ interface Categoria {
   icone: string
 }
 
-export default async function Categorias() {
+export default async function Loading() {
 
   const categorias: Categoria[] = await getCategorias()
 
@@ -28,9 +28,11 @@ export default async function Categorias() {
           </Link>
         </div>
 
-        <div id="data">
+        {/* <div id="data">
           {categorias.map(categoria => <CategoriaItem categoria={categoria} />)}
-        </div>
+        </div> */}
+
+        <p>carregando...</p>
 
       </section>
 

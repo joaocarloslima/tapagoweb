@@ -1,29 +1,36 @@
 'use client'
 
-import { destroy } from "@/app/actions/categorias/destroy";
-import {  
-    Dropdown,  
-    DropdownTrigger,  
-    DropdownMenu,  
-    DropdownSection,  
+import {
+    Dropdown,
     DropdownItem,
-    Button
+    DropdownMenu,
+    DropdownTrigger
 } from "@nextui-org/react";
 import { ChevronDown, Pencil, Trash } from "lucide-react";
 import { MouseEventHandler } from "react";
 
 interface DropDownActionsProps {
+    onEdit: MouseEventHandler,
     onDelete: MouseEventHandler
 }
 
-export function DropDownActions({onDelete}: DropDownActionsProps){
+export function DropDownActions({onEdit, onDelete}: DropDownActionsProps){
     return (
         <Dropdown>
         <DropdownTrigger>
             <ChevronDown />
         </DropdownTrigger>
         <DropdownMenu aria-label="Static Actions">
-            <DropdownItem key="edit" startContent={<Pencil size={18} />} >editar</DropdownItem>
+            
+            <DropdownItem 
+                key="edit" 
+                startContent={<Pencil size={18} />} 
+                onClick={onEdit}
+            >
+                editar
+            </DropdownItem>
+
+
             <DropdownItem 
                 key="delete" 
                 startContent={<Trash size={18} />} 
