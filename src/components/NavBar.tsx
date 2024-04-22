@@ -22,7 +22,7 @@ export default function NavBar(props: NavBarProps) {
                     <Link href="/categorias">categorias</Link>
                 </li>
             </ul>
-            <div className="w-16 rounded-full overflow-hidden">
+            <div className="size-16 rounded-full overflow-hidden">
                 <img src="https://i.pravatar.cc/300" alt="avatar do usuário" />
             </div>
         </nav>
