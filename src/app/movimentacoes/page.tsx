@@ -4,7 +4,7 @@ import { get } from "../actions/movimentacoes/get";
 import { MovimentacaoData } from "./MovimentacaoData";
 
 export default async function Movimentacoes() {
-  const movimentacoes: Array<Movimentacao> = await get()
+  const movimentacoes: any = await get()
   const categorias: Array<Categoria> = await getCategorias()
 
   return (
@@ -12,7 +12,7 @@ export default async function Movimentacoes() {
       <NavBar active="movimentacoes" />
 
       <MovimentacaoData 
-        movimentacoes={movimentacoes} 
+        movimentacoes={movimentacoes.content} 
         categorias={categorias}
        />
 

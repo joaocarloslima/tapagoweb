@@ -16,21 +16,24 @@ interface MovimentacaoDataProps {
 
 export function MovimentacaoData({ movimentacoes, categorias }: MovimentacaoDataProps) {
 
-    const [filteredMovimentacoes, setFilteredMovimentacoes] = useState(movimentacoes);
-    const [filter, setFilter] = useState({ categoria: '', mes: new Date().getMonth() + 1 });
+    const [filteredMovimentacoes, setFilteredMovimentacoes] = useState(movimentacoes)
+    const [filter, setFilter] = useState({ categoria: '', mes: new Date().getMonth() + 1 })
+    const [page, setPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(10)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data = await get(filter.categoria, Number(filter.mes));
-                setFilteredMovimentacoes(data);
+                const data = await get(filter.categoria, Number(filter.mes), page)
+                setFilteredMovimentacoes(data.content)
+                setTotalPages(data.totalPages)
             } catch (error) {
                 throw new Error("falha ao filtrar movimentações.")
             }
         };
 
         fetchData();
-    }, [filter]);
+    }, [filter, page]);
 
     const changeFilter = (e: any) => {
         setFilter({ ...filter, [e.target.name]: e.target.value });
@@ -40,9 +43,13 @@ export function MovimentacaoData({ movimentacoes, categorias }: MovimentacaoData
         setFilter({ categoria: '', mes: new Date().getMonth() + 1 });
     }
 
+    const handlePageChange = (page: number) => {
+        setPage(page);
+    }
+
     return (
         <>
-            <section className="flex flex-col gap-4 bg-slate-800 w-4/5 max-w-[1024px] mt-4 p-6 rounded">
+            <section className="flex flex-col gap-4 bg-slate-800 w-4/5 max-w-[1024px] min-h-[565px] mt-4 p-6 rounded">
                 <div className="flex justify-between">
                     <h2 className="text-2xl font-bold">Movimentações</h2>
                     <Link href="/movimentacoes/new">
@@ -64,12 +71,14 @@ export function MovimentacaoData({ movimentacoes, categorias }: MovimentacaoData
             </section>
 
             <Pagination 
+                onChange={handlePageChange}
                 isCompact 
                 showControls 
-                total={10} 
-                page={3}
+                total={totalPages} 
+                page={1}
                 className="mt-6"
              />
+
         </>
     )
 }
