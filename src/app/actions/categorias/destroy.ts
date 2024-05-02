@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidateTag } from "next/cache"
 import { redirect } from "next/navigation"
 
 
@@ -12,6 +13,7 @@ export async function destroy(id: number){
     }
 
     const resp = await fetch(`${process.env.API_BASE_URL}/categoria/${id}`, options)
+    revalidateTag("categorias")
 
     //redirect("/categorias")
    

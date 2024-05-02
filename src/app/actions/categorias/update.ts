@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidateTag } from "next/cache"
 import { redirect } from "next/navigation"
 
 export async function update(prevState: any, formData: FormData){
@@ -23,6 +24,7 @@ export async function update(prevState: any, formData: FormData){
     const resp = await fetch(`${process.env.API_BASE_URL}/categoria/${id}`, options)
     
     if (resp.ok){
+      revalidateTag("categorias")
       redirect("/categorias")
     }
 
